@@ -9,3 +9,5 @@ tsconfig.json
 *.test.ts
 *.spec.ts
 *.log
+jest.config.d.ts
+jest.config.js
