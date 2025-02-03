@@ -1,9 +1,9 @@
 {
   "name": "@the-horizon-dev/fast-diacritics",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "High-performance library for handling diacritical marks in strings",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "LICENSE",
@@ -12,8 +12,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "import": "./index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
   },
   "scripts": {
