@@ -15,7 +15,7 @@ A high-performance TypeScript library for handling diacritical marks in strings.
 To install the library, use npm:
 
 ```bash
-npm install @the-horizon-dev/diacritics-lib
+npm install @the-horizon-dev/fast-diacritics
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ npm install @the-horizon-dev/diacritics-lib
 To use the Diacritics library, import the `Diacritics` class and call the `remove` method:
 
 ```typescript
-import { Diacritics } from 'diacritics-lib';
+import { Diacritics } from '@the-horizon-dev/fast-diacritics';
 
 const stringWithDiacritics = "Café";
 const stringWithoutDiacritics = Diacritics.remove(stringWithDiacritics);
