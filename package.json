@@ -1,6 +1,6 @@
 {
   "name": "@the-horizon-dev/fast-diacritics",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "High-performance library for handling diacritical marks in strings",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
