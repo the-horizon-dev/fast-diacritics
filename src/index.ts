@@ -1,2 +1,3 @@
 export { Diacritics } from './diacritics';
-export { ReplacementMapping } from './interfaces/replacementMapping';
+export type { ReplacementMapping } from './interfaces/replacementMapping';
+export type { RemoveOptions, SingleChar } from './interfaces/types';

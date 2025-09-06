@@ -1,6 +1,6 @@
 import { DIACRITIC_MAPPINGS } from './constants/mappings';
 import type { ReplacementMapping } from './interfaces/replacementMapping';
-import type { SingleChar } from './interfaces/types';
+import type { SingleChar, RemoveOptions } from './interfaces/types';
 import { isSingleChar } from './interfaces/types';
 
 /**
@@ -12,6 +12,8 @@ export class Diacritics {
     private static readonly replacementList: ReadonlyArray<ReplacementMapping> = DIACRITIC_MAPPINGS;
     private static diacriticsMap: Record<string, string> = {};
     private static initialized = false;
+    private static readonly combiningMarksRegex = /[\u0300-\u036f]/g;
+    private static readonly asciiRegex = /^[\x00-\x7F]*$/;
 
     /**
      * Initializes the internal diacritics mapping.
@@ -57,7 +59,7 @@ export class Diacritics {
      * Diacritics.remove('CAFÉ', true) // returns 'CAFE'
      * @public
      */
-    public static remove(str: string, preserveCase = true): string {
+    public static remove(str: string, preserveCaseOrOptions: boolean | RemoveOptions = true): string {
         if (typeof str !== 'string') {
             throw new TypeError('Input must be a string');
         }
@@ -68,14 +70,24 @@ export class Diacritics {
             this.initMap();
         }
 
+        // Fast path: if the input is pure ASCII, nothing to strip
+        if (this.asciiRegex.test(str)) {
+            return str;
+        }
+
         const normalized = str.normalize('NFD');
-        const result = normalized.replace(/[\u0300-\u036f]/g, '').normalize('NFC');
+        const result = normalized.replace(this.combiningMarksRegex, '').normalize('NFC');
+        const preserveCase = typeof preserveCaseOrOptions === 'boolean'
+            ? preserveCaseOrOptions
+            : (preserveCaseOrOptions?.preserveCase ?? true);
         
         if (preserveCase) return result;
 
-        return result.split('').map((char, index) => {
-            const originalChar = str[index];
-            const hadDiacritic = originalChar !== result[index];
+        const originalChars = Array.from(str);
+        const resultChars = Array.from(result);
+        return resultChars.map((char, index) => {
+            const originalChar = originalChars[index];
+            const hadDiacritic = originalChar !== char;
             return hadDiacritic ? char.toLowerCase() : char;
         }).join('');
     }
