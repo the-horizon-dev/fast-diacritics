@@ -1,7 +1,7 @@
-import { DIACRITIC_MAPPINGS } from './constants/mappings';
-import type { ReplacementMapping } from './interfaces/replacementMapping';
-import type { SingleChar, RemoveOptions } from './interfaces/types';
-import { isSingleChar } from './interfaces/types';
+import { DIACRITIC_MAPPINGS } from './constants/mappings.js';
+import type { ReplacementMapping } from './interfaces/replacementMapping.js';
+import type { SingleChar, RemoveOptions } from './interfaces/types.js';
+import { isSingleChar } from './interfaces/types.js';
 
 /**
  * A class for handling diacritical marks in strings.
@@ -13,7 +13,8 @@ export class Diacritics {
     private static diacriticsMap: Record<string, string> = {};
     private static initialized = false;
     private static readonly combiningMarksRegex = /[\u0300-\u036f]/g;
-    private static readonly asciiRegex = /^[\x00-\x7F]*$/;
+    // Printable ASCII only (U+0020 to U+007E) to satisfy no-control-regex
+    private static readonly asciiRegex = /^[\u0020-\u007E]*$/;
 
     /**
      * Initializes the internal diacritics mapping.
@@ -85,7 +86,7 @@ export class Diacritics {
 
         const originalChars = Array.from(str);
         const resultChars = Array.from(result);
-        return resultChars.map((char, index) => {
+        return resultChars.map((char: string, index: number) => {
             const originalChar = originalChars[index];
             const hadDiacritic = originalChar !== char;
             return hadDiacritic ? char.toLowerCase() : char;

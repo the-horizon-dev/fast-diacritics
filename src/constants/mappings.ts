@@ -1,4 +1,4 @@
-import type { ReplacementMapping } from "../interfaces/replacementMapping";
+import type { ReplacementMapping } from "../interfaces/replacementMapping.js";
 
 export const DIACRITIC_MAPPINGS: ReadonlyArray<ReplacementMapping> = [
   {
